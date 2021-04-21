@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go_classify/biz/config"
 	"go_classify/biz/drivers"
+	"go_classify/biz/task"
 )
 
 // 主函数
@@ -12,7 +13,8 @@ func main() {
 
 	config.InitConfig("conf/config.yml")
 	drivers.InitFromConfigOnce()
+	task.InitTask()
 
 	register(r)
-	r.Run(":9090")
+	r.Run(":8686")
 }

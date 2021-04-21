@@ -4,7 +4,6 @@ package config
 type BasicConfig struct {
 	Mysql Mysql `yaml:"mysql"`
 	Redis Redis `yaml:"redis"`
-	Http  Http  `yaml:"http"`
 }
 
 // Mysql db相关配置
@@ -22,17 +21,4 @@ type Redis struct {
 	Port      string `yaml:"port"`
 	DB        string `yaml:"db"`
 	PassWorld string `yaml:"password"`
-}
-
-// Http Http相关配置
-type Http struct {
-	SMS SMS `yaml:"sms"`
-}
-
-// SMS 短信验证码相关配置
-type SMS struct {
-	ApiUrl     string `yaml:"api_url"`
-	SecretId   string `yaml:"secret_id"`
-	SecretKey  string `yaml:"secret_key"`
-	TemplateId string `yaml:"template_id"`
 }

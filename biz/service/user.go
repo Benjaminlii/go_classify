@@ -1,25 +1,22 @@
 package service
 
 import (
-	"go_classify/biz/dal"
+	"go_classify/biz/dao"
 	"go_classify/biz/domain/model"
-	"log"
 )
 
 // SelectUser 查询用户信息，用于登录
-func SelectUser(username string, password string) (*model.User, error) {
-	db := dal.GetDB()
-	db = dal.FilterByUsernameAndPassword(db, username, password)
-	user, err := dal.SelectUser(db)
-	if err != nil {
-		return nil, err
+func SelectUser(username string, password string) *model.User {
+	user := dao.GetUserByUsernameAndPassword(username, password)
+	if user == nil {
+		return nil
 	}
-	return user, nil
+	return user
 }
 
 // SignUp 用户注册
-func SignUp(username string, password string, name string, userIdentity uint, category uint) (*model.User, error) {
-	db := dal.GetDB()
+func SignUp(username string, password string, name string, userIdentity uint, category uint) *model.User {
+	db := dao.GetDB()
 	// 数据库事物
 	tx := db.Begin()
 	defer tx.Commit()
@@ -29,11 +26,7 @@ func SignUp(username string, password string, name string, userIdentity uint, ca
 		Username: username,
 		Password: password,
 	}
-	user, err := dal.InsertUser(db, user)
-	if err != nil {
-		log.Print("[service][user][SignUp] InsertUser fail")
-		return nil, err
-	}
+	user = dao.InsertUser(user)
 
-	return user, nil
+	return user
 }

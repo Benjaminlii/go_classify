@@ -32,23 +32,37 @@ func InitMySQL(config *config.BasicConfig) {
 	createTable()
 }
 
-// createTable 根据模型创建数据库表
 func createTable() {
 	db := DB
-	if !db.HasTable(&model.User{}) {
-		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.User{})
+
+	if !db.HasTable(&model.ClassifyRecord{}) {
+		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.ClassifyRecord{})
+		db.Model(&model.ClassifyRecord{}).AddForeignKey("user_id", "users(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.ClassifyRecord{}).AddForeignKey("image_id", "images(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.ClassifyRecord{}).AddForeignKey("garbage_type_id", "garbage_types(id)", "RESTRICT", "RESTRICT")
+		log.Print("[system][mysql][createTable] create table `classify_records`")
 	}
 	if !db.HasTable(&model.GarbageDetail{}) {
 		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.GarbageDetail{})
+		db.Model(&model.GarbageDetail{}).AddForeignKey("base_type", "garbage_types(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.GarbageDetail{}).AddForeignKey("image_id", "images(id)", "RESTRICT", "RESTRICT")
+		log.Print("[system][mysql][createTable] create table `garbage_details`")
 	}
 	if !db.HasTable(&model.GarbageType{}) {
 		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.GarbageType{})
+		db.Model(&model.GarbageType{}).AddForeignKey("parent_type_id", "garbage_types(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.GarbageType{}).AddForeignKey("image_id", "images(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.GarbageType{}).AddForeignKey("garbage_detail_id", "garbage_details(id)", "RESTRICT", "RESTRICT")
+		log.Print("[system][mysql][createTable] create table `garbage_types`")
 	}
 	if !db.HasTable(&model.Image{}) {
 		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.Image{})
+		log.Print("[system][mysql][createTable] create table `images`")
 	}
-	if !db.HasTable(&model.ClassifyRecord{}) {
-		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.ClassifyRecord{})
+	if !db.HasTable(&model.User{}) {
+		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.User{})
+		log.Print("[system][mysql][createTable] create table `users`")
 	}
+
 	log.Print("[system][mysql] create table success!")
 }

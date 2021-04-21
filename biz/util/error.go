@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_classify/biz/constants"
+	"go_classify/biz/constants/errors"
 	"log"
 	"net/http"
 )
@@ -22,14 +23,14 @@ func SetResponse(c *gin.Context) {
 	}
 
 	// 发生错误
-	resp := constants.SUCCESS.ChangeToResp(dataInterface)
+	resp := errors.SUCCESS.ChangeToResp(dataInterface)
 	if err := recover(); err != nil {
 		// 已定义错误
-		if myError, isOk := err.(constants.Error); isOk {
+		if myError, isOk := err.(*errors.Error); isOk {
 			resp = myError.ChangeToResp(dataInterface)
 		} else {
-			resp = constants.OTHER_ERROR.ChangeToResp(dataInterface)
-			resp[constants.ERROR_MESSAGE] = fmt.Sprintf("%s%s", constants.OTHER_ERROR.ErrorMessage, err)
+			resp = errors.OTHER_ERROR.ChangeToResp(dataInterface)
+			resp[constants.ERROR_MESSAGE] = fmt.Sprintf("%s%s", errors.OTHER_ERROR.ErrorMessage, err)
 		}
 	}
 

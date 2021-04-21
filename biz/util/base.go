@@ -3,6 +3,7 @@ package util
 import (
 	"github.com/gin-gonic/gin"
 	"go_classify/biz/constants"
+	"go_classify/biz/constants/errors"
 	"go_classify/biz/domain/model"
 	"log"
 )
@@ -12,11 +13,11 @@ func GetCurrentUser(c *gin.Context) *model.User {
 	currentUserInterFace, isOk := c.Get(constants.CURRENT_USER)
 	if !isOk {
 		log.Printf("[system][user][GetCurrentUser] current user is not exist")
-		panic(constants.NO_LOGIN_ERROR)
+		panic(errors.NO_LOGIN_ERROR)
 	}
 	currentUser, isOk := currentUserInterFace.(*model.User)
 	if !isOk {
-		panic(constants.SYSTEM_ERROR)
+		panic(errors.SYSTEM_ERROR)
 	}
 	return currentUser
 }

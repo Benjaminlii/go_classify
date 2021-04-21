@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"go_classify/biz/constants"
+	"go_classify/biz/constants/errors"
 	"go_classify/biz/domain/model"
 	"go_classify/biz/drivers"
 	"log"
@@ -16,11 +17,11 @@ func CheckUserLoginMiddleware() func(c *gin.Context) {
 	return func(c *gin.Context) {
 
 		// 从headers获取token
-		token := c.Request.Header[constants.TOKEN][0]
+		token := c.Request.Header["Token"][0]
 		if token == "" {
 			log.Printf("[system][CheckUserLoginMiddleware] no token")
 			c.Abort()
-			c.JSON(http.StatusOK, constants.NO_TOKEN_ERROR.ChangeToResp(nil))
+			c.JSON(http.StatusOK, errors.NO_TOKEN_ERROR.ChangeToResp(nil))
 			return
 		}
 
@@ -29,7 +30,7 @@ func CheckUserLoginMiddleware() func(c *gin.Context) {
 		if err != nil {
 			log.Printf("[system][CheckUserLoginMiddleware] user id wrong, token:%s", token)
 			c.Abort()
-			c.JSON(http.StatusOK, constants.TOKEN_WRONG_ERROR.ChangeToResp(nil))
+			c.JSON(http.StatusOK, errors.TOKEN_WRONG_ERROR.ChangeToResp(nil))
 			return
 		}
 		user := &model.User{}
@@ -37,7 +38,7 @@ func CheckUserLoginMiddleware() func(c *gin.Context) {
 		if err != nil {
 			log.Printf("[system][CheckUserLoginMiddleware] user id wrong, token:%s", token)
 			c.Abort()
-			c.JSON(http.StatusOK, constants.TOKEN_WRONG_ERROR.ChangeToResp(nil))
+			c.JSON(http.StatusOK, errors.TOKEN_WRONG_ERROR.ChangeToResp(nil))
 			return
 		}
 
