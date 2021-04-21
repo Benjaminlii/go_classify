@@ -21,6 +21,11 @@ func register(r *gin.Engine) {
 
 	goClassify.Use(middleware.CheckUserLoginMiddleware())
 
+	classify := goClassify.Group("/classify")
+	{
+		classify.POST("/get_records", handler.GetRecords)
+	}
+
 	ping := goClassify.Group("/ping")
 	{
 		ping.POST("/ping", handler.Ping)

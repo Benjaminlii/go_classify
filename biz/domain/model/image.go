@@ -9,5 +9,6 @@ import (
 type Image struct {
 	gorm.Model
 	base.Row
-	url string `gorm:"column:url"` // 图片完整路径
+	Path string `gorm:"column:path"` // 图片在服务器的结对路径
+	Url  string `gorm:"column:url"`  // 图片网络路径
 }

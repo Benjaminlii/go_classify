@@ -59,6 +59,12 @@ func createTable() {
 		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.Image{})
 		log.Print("[system][mysql][createTable] create table `images`")
 	}
+	if !db.HasTable(&model.Recycle{}) {
+		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.Recycle{})
+		db.Model(&model.Recycle{}).AddForeignKey("user_id", "users(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.Recycle{}).AddForeignKey("classify_record_id", "classify_records(id)", "RESTRICT", "RESTRICT")
+		log.Print("[system][mysql][createTable] create table `images`")
+	}
 	if !db.HasTable(&model.User{}) {
 		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.User{})
 		log.Print("[system][mysql][createTable] create table `users`")
