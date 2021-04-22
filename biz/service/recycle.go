@@ -41,9 +41,10 @@ func GetRecycles(c *gin.Context, index uint, limit uint) []dto.GetRecyclesDTO {
 		image := dao.GetImageById(classifyRecord.ImageId)
 		garbageType := dao.GetGarbageTypeById(classifyRecord.GarbageTypeId)
 		getRecyclesDTO := dto.GetRecyclesDTO{
-			ImageUrl:    image.Url,
-			GarbageType: garbageType.Name,
-			RecycleTime: recycle.CreatedAt.Unix(),
+			ImageUrl:      image.Url,
+			GarbageType:   garbageType.Name,
+			RecycleTime:   recycle.CreatedAt.Unix(),
+			RecycleStatic: recycle.Static,
 		}
 		ans = append(ans, getRecyclesDTO)
 	}
