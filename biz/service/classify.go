@@ -13,7 +13,7 @@ func GetRecords(c *gin.Context, index uint, limit uint) []dto.GetRecordsDTO {
 	user := util.GetCurrentUser(c)
 
 	// 获取该用户的识别记录，分页
-	records := dao.GetRecordByUserIdLimit(user.ID, index, limit)
+	records := dao.FindClassifyRecordByUserIdLimit(user.ID, index, limit)
 
 	ans := make([]dto.GetRecordsDTO, len(records))
 

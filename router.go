@@ -26,6 +26,18 @@ func register(r *gin.Engine) {
 		classify.POST("/get_records", handler.GetRecords)
 	}
 
+	dict := goClassify.Group("/dict")
+	{
+		dict.POST("/get_child_garbage_type", handler.GetChildGarbageType)
+		dict.POST("/get_garbage_detail", handler.GetGarbageDetail)
+	}
+
+	recycle := goClassify.Group("/recycle")
+	{
+		recycle.POST("/post_recycle", handler.PostRecycle)
+		recycle.POST("/get_recycles", handler.GetRecycles)
+	}
+
 	ping := goClassify.Group("/ping")
 	{
 		ping.POST("/ping", handler.Ping)

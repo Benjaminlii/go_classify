@@ -10,8 +10,13 @@ const (
 
 )
 
-// 业务字段
-const ()
+// 回收单状态
+const (
+	RECYCLE_STATIC_PENDING = 1 // 待处理
+	RECYCLE_STATIC_IN_HAND = 2 // 处理中
+	RECYCLE_STATIC_DONE    = 3 // 处理完成
+	RECYCLE_STATIC_CLOSE   = 4 // 回收单关闭
+)
 
 // Redis相关
 const (
