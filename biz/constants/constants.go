@@ -18,6 +18,11 @@ const (
 	RECYCLE_STATIC_CLOSE   = 4 // 回收单关闭
 )
 
+// 图像模块
+const (
+	IMAGE_PATH_PRE_USER_AVATAR = "/root/image/go_classify/avatar/"
+)
+
 // Redis相关
 const (
 	REDIS_USER_TOKEN_PRE = "go_classify_user_token_"     // 当前登录的用户在redis中存储有过期时间键的key前缀

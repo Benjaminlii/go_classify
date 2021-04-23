@@ -17,6 +17,7 @@ func register(r *gin.Engine) {
 
 		user.Use(middleware.CheckUserLoginMiddleware())
 		user.POST("/sign_out", handler.SignOut)
+		user.POST("/post_avatar", handler.PostAvatar)
 	}
 
 	goClassify.Use(middleware.CheckUserLoginMiddleware())

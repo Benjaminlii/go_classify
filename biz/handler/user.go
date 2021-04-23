@@ -1,12 +1,15 @@
 package handler
 
 import (
+	"encoding/base64"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_classify/biz/constants"
 	"go_classify/biz/constants/errors"
 	"go_classify/biz/drivers"
 	"go_classify/biz/service"
 	"go_classify/biz/util"
+	"io/ioutil"
 	"log"
 )
 
@@ -100,5 +103,42 @@ func SignOut(c *gin.Context) {
 	// 设置请求响应
 	respMap := map[string]interface{}{}
 
+	c.Set(constants.DATA, respMap)
+}
+
+// PostAvatar 上传头像
+func PostAvatar(c *gin.Context) {
+	defer util.SetResponse(c)
+
+	// 解析请求参数
+	param := make(map[string]string)
+	err := c.BindJSON(&param)
+	if err != nil {
+		log.Printf("[service][user][PostAvatar] request type error, err:%s", err)
+		panic(err)
+	}
+	imageBit, haveImageBit := param["image_bit"]
+	imageName, haveImageName := param["image_name"]
+	if !(haveImageBit && haveImageName) {
+		log.Print("[service][user][PostAvatar] has nil in imageBit ans imageName")
+		panic(errors.REQUEST_TYPE_ERROR)
+	}
+
+	// 成图片文件并把文件写入到buffer
+	bytes, _ := base64.StdEncoding.DecodeString(imageBit)
+	// buffer输出到jpg文件中
+	filePath := fmt.Sprintf("%s%s", constants.IMAGE_PATH_PRE_USER_AVATAR, util.GetAvatarName(c, imageName))
+	err = ioutil.WriteFile(filePath, bytes, 0666)
+	if err != nil {
+		log.Printf("[service][user][PostAvatar] WriteFile error, filePath:%s, err:%s", filePath, err)
+		panic(errors.SYSTEM_ERROR)
+	}
+
+	// todo 上传/image/go_classify/avatar/1779c453.png到腾讯云
+	// todo url写入到数据库image，设置默认头像
+	// todo 这里的业务:存储新的image，并更新用户的头像imageId
+
+	// 设置请求响应
+	respMap := make(map[string]interface{})
 	c.Set(constants.DATA, respMap)
 }

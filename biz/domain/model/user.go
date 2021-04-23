@@ -9,6 +9,7 @@ import (
 type User struct {
 	gorm.Model
 	base.Row
-	Username string `gorm:"column:username;unique_index"` // 用户手机号码
-	Password string `gorm:"column:password"`              // 密码
+	Username      string `gorm:"column:username;unique_index"` // 用户手机号码
+	Password      string `gorm:"column:password"`              // 密码
+	AvatarImageId uint   `gorm:"column:avatar_image_id"`       // 用户头像图片
 }
