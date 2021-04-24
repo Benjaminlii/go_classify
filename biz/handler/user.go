@@ -127,18 +127,32 @@ func PostAvatar(c *gin.Context) {
 	// 成图片文件并把文件写入到buffer
 	bytes, _ := base64.StdEncoding.DecodeString(imageBit)
 	// buffer输出到jpg文件中
-	filePath := fmt.Sprintf("%s%s", constants.IMAGE_PATH_PRE_USER_AVATAR, util.GetAvatarName(c, imageName))
-	err = ioutil.WriteFile(filePath, bytes, 0666)
+	avatarName := util.GetAvatarName(c, imageName)
+	imagePath := fmt.Sprintf("%s%s", constants.IMAGE_PATH_PRE_USER_AVATAR, avatarName)
+	imageUrl := fmt.Sprintf("%s%s", constants.IMAGE_URL_PRE_USER_AVATAR, avatarName)
+	err = ioutil.WriteFile(imagePath, bytes, 0666)
 	if err != nil {
-		log.Printf("[service][user][PostAvatar] WriteFile error, filePath:%s, err:%s", filePath, err)
+		log.Printf("[service][user][PostAvatar] WriteFile error, filePath:%s, err:%s", imagePath, err)
 		panic(errors.SYSTEM_ERROR)
 	}
 
-	// todo 上传/image/go_classify/avatar/1779c453.png到腾讯云
-	// todo url写入到数据库image，设置默认头像
-	// todo 这里的业务:存储新的image，并更新用户的头像imageId
+	image := service.PostAvatar(c, imagePath, imageUrl)
 
 	// 设置请求响应
-	respMap := make(map[string]interface{})
+	respMap := make(map[string]interface{}, 1)
+	respMap["image_url"] = image.Url
+	c.Set(constants.DATA, respMap)
+}
+
+// GetUserInfo 获取用户信息
+func GetUserInfo(c *gin.Context) {
+	defer util.SetResponse(c)
+
+	userName, imageUrl := service.GetUserInfo(c)
+
+	// 设置请求响应
+	respMap := make(map[string]interface{}, 2)
+	respMap["user_name"] = userName
+	respMap["image_url"] = imageUrl
 	c.Set(constants.DATA, respMap)
 }

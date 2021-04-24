@@ -34,6 +34,12 @@ func InsertUser(insertUser *model.User) *model.User {
 	return insertUser
 }
 
+// SaveUser 更新并覆盖user
+func SaveUser(user *model.User) {
+	db := GetDB()
+	db.Save(user)
+}
+
 // selectUser 根据db去查询user模型
 func selectUser(db *gorm.DB) *model.User {
 	user := &model.User{}

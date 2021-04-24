@@ -14,6 +14,17 @@ func GetImageById(imageId uint) *model.Image {
 	return selectImage(db)
 }
 
+// InsertImage 插入一个image对象
+func InsertImage(insertImage *model.Image) *model.Image {
+	db := GetDB()
+	db.Create(insertImage)
+	if err := db.Error; err != nil {
+		log.Printf("[service][image][insertImage] db insert error, err:%s", err)
+		panic(err)
+	}
+	return insertImage
+}
+
 // selectImage 根据db去查询image模型
 func selectImage(db *gorm.DB) *model.Image {
 	image := &model.Image{}

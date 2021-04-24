@@ -21,6 +21,9 @@ const (
 // 图像模块
 const (
 	IMAGE_PATH_PRE_USER_AVATAR = "/root/image/go_classify/avatar/"
+	IMAGE_URL_PRE_USER_AVATAR  = "http://benjaminlee.cn/nginx/image/go_classify/avatar/"
+
+	USER_DEFAULT_AVATAR_IMAGE_ID = 1
 )
 
 // Redis相关
