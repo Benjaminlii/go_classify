@@ -26,7 +26,7 @@ func register(r *gin.Engine) {
 	classify := goClassify.Group("/classify")
 	{
 		classify.POST("/get_records", handler.GetRecords)
-		//todo classify.POST("/do_classify", handler.DoClassify)
+		classify.POST("/go_classify", handler.GoClassify)
 	}
 
 	dict := goClassify.Group("/dict")

@@ -22,6 +22,17 @@ func FindClassifyRecordByUserIdLimit(userId uint, index uint, count uint) []mode
 	return findClassifyRecord(db)
 }
 
+// InsertClassifyRecord 插入一个classifyRecord对象
+func InsertClassifyRecord(insertClassifyRecord *model.ClassifyRecord) *model.ClassifyRecord {
+	db := GetDB()
+	db.Create(insertClassifyRecord)
+	if err := db.Error; err != nil {
+		log.Printf("[service][classifyRecord][InsertClassifyRecord] db insert error, err:%s", err)
+		panic(err)
+	}
+	return insertClassifyRecord
+}
+
 // findClassifyRecord 根据传入的db查询classifyRecord
 func findClassifyRecord(db *gorm.DB) (ans []model.ClassifyRecord) {
 	db.Find(&ans)

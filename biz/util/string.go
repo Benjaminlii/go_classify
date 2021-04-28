@@ -12,6 +12,11 @@ func GetAvatarName(c *gin.Context, imageName string) string {
 	return getImageName(c, imageName, "avatar")
 }
 
+// GetClassifyPhotoName 生成一个识别图片的name
+func GetClassifyPhotoName(c *gin.Context, imageName string) string {
+	return getImageName(c, imageName, "classify_photo")
+}
+
 // getImageName 生成一个image的name
 func getImageName(c *gin.Context, imageName string, imageType string) string {
 	currentUser := GetCurrentUser(c)

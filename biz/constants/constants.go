@@ -20,10 +20,14 @@ const (
 
 // 图像模块
 const (
-	IMAGE_PATH_PRE_USER_AVATAR = "/root/image/go_classify/avatar/"
-	IMAGE_URL_PRE_USER_AVATAR  = "http://benjaminlee.cn/nginx/image/go_classify/avatar/"
+	IMAGE_PATH_PRE_USER_AVATAR    = "/root/image/go_classify/avatar/"                               // 用户头像存储绝对路径前缀
+	IMAGE_URL_PRE_USER_AVATAR     = "http://benjaminlee.cn/nginx/image/go_classify/avatar/"         // 用户头像静态资源url
+	IMAGE_PATH_PRE_CLASSIFY_PHOTO = "/root/image/go_classify/classify_photo/"                       // 待识别图片存储绝对路径前缀
+	IMAGE_URL_PRE_CLASSIFY_PHOTO  = "http://benjaminlee.cn/nginx/image/go_classify/classify_photo/" // 待识别图片静态资源url
 
-	USER_DEFAULT_AVATAR_IMAGE_ID = 1
+	USER_DEFAULT_AVATAR_IMAGE_ID = 1 // 用户默认头像id
+
+	DO_CLASSIFY_SERVICE_URL = "http://localhost:8686/classify/do_classify/" // 识别服务的API地址
 )
 
 // Redis相关

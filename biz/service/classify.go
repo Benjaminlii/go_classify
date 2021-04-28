@@ -1,10 +1,15 @@
 package service
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"go_classify/biz/constants"
+	"go_classify/biz/constants/errors"
 	"go_classify/biz/dao"
 	"go_classify/biz/domain/dto"
+	"go_classify/biz/domain/model"
 	"go_classify/biz/util"
+	"log"
 )
 
 // GetRecords 查询当前账号的识别记录列表
@@ -31,4 +36,49 @@ func GetRecords(c *gin.Context, index uint, limit uint) []dto.GetRecordsDTO {
 	}
 
 	return ans
+}
+
+// GoClassify 进行识别
+func GoClassify(c *gin.Context, imagePath string, imageUrl string) string {
+	// 插入该图片到image表中
+	classifyImage := &model.Image{
+		Path: imagePath,
+		Url:  imageUrl,
+	}
+	classifyImage = dao.InsertImage(classifyImage)
+
+	// 获得识别结果
+	url := constants.DO_CLASSIFY_SERVICE_URL
+	paramMap := map[string]string{"image_path": imagePath}
+	result := util.Post(url, paramMap, "")
+	// 结果解析
+	ansMap := make(map[string]string)
+	err := json.Unmarshal([]byte(result), &ansMap)
+	if err != nil {
+		log.Printf("[service][classify][GoClassify] json unmarshal error, err:%s", err)
+		panic(err)
+	}
+	garbageTypeIdStr, isOk := paramMap["code"]
+	if !isOk {
+		log.Printf("[service][classify][GoClassify] classify service return not have code")
+		panic(errors.OUTSIDE_ERROR)
+	}
+	garbageTypeId := util.StringToUInt(garbageTypeIdStr)
+	// 校验结果
+	garbageType := dao.GetGarbageTypeById(garbageTypeId)
+	if garbageType == nil {
+		log.Printf("[service][classify][GoClassify] classify service return code is not right")
+		panic(errors.OUTSIDE_ERROR)
+	}
+
+	// 存储为record记录
+	currentUser := util.GetCurrentUser(c)
+	record := &model.ClassifyRecord{
+		UserId:        currentUser.ID,
+		ImageId:       classifyImage.ID,
+		GarbageTypeId: garbageType.ID,
+	}
+	dao.InsertClassifyRecord(record)
+
+	return util.UintToString(garbageType.ID)
 }

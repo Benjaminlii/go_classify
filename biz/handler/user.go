@@ -120,7 +120,7 @@ func PostAvatar(c *gin.Context) {
 	imageBit, haveImageBit := param["image_bit"]
 	imageName, haveImageName := param["image_name"]
 	if !(haveImageBit && haveImageName) {
-		log.Print("[service][user][PostAvatar] has nil in imageBit ans imageName")
+		log.Print("[service][user][PostAvatar] has nil in imageBit and imageName")
 		panic(errors.REQUEST_TYPE_ERROR)
 	}
 
