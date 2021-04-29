@@ -59,3 +59,12 @@ func GetUserInfo(c *gin.Context) (string, string) {
 
 	return currentUser.Username, image.Url
 }
+
+// SelectAdministrator 管理员登录
+func SelectAdministrator(c *gin.Context, username string, password string) *model.Administrator {
+	administrator := dao.GetAdministratorByUsernameAndPassword(username, password)
+	if administrator == nil {
+		return nil
+	}
+	return administrator
+}

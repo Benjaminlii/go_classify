@@ -14,6 +14,7 @@ func register(r *gin.Engine) {
 	{
 		user.POST("/sign_in", handler.SignIn)
 		user.POST("/sign_up", handler.SignUp)
+		user.POST("/administrator_sign_up", handler.AdministratorSignUp)
 
 		user.Use(middleware.CheckUserLoginMiddleware())
 		user.POST("/sign_out", handler.SignOut)
