@@ -17,7 +17,7 @@ func GetImageById(imageId uint) *model.Image {
 // InsertImage 插入一个image对象
 func InsertImage(insertImage *model.Image) *model.Image {
 	db := GetDB()
-	db.Create(insertImage)
+	db = db.Create(insertImage)
 	if err := db.Error; err != nil {
 		log.Printf("[service][image][insertImage] db insert error, err:%s", err)
 		panic(err)

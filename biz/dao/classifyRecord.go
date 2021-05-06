@@ -25,7 +25,7 @@ func FindClassifyRecordByUserIdLimit(userId uint, index uint, count uint) []mode
 // InsertClassifyRecord 插入一个classifyRecord对象
 func InsertClassifyRecord(insertClassifyRecord *model.ClassifyRecord) *model.ClassifyRecord {
 	db := GetDB()
-	db.Create(insertClassifyRecord)
+	db = db.Create(insertClassifyRecord)
 	if err := db.Error; err != nil {
 		log.Printf("[service][classifyRecord][InsertClassifyRecord] db insert error, err:%s", err)
 		panic(err)

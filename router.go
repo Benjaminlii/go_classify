@@ -9,6 +9,15 @@ import (
 func register(r *gin.Engine) {
 	goClassify := r.Group("/api/go_classify")
 
+	// 管理员处理回收项模块
+	manage := goClassify.Group("/manage")
+	{
+		manage.POST("/administrator_sign_up", handler.AdministratorSignUp)
+		manage.Use(middleware.CheckManagerLoginMiddleware())
+		manage.POST("/get_recycles_to_manage", handler.GetRecycleToMessage)
+		manage.POST("/follow_up_or_turn_down", handler.FollowUpOrTurnDown)
+	}
+
 	// 用户模块
 	user := goClassify.Group("/user")
 	{

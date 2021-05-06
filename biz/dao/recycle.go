@@ -2,6 +2,7 @@ package dao
 
 import (
 	"github.com/jinzhu/gorm"
+	"go_classify/biz/constants/errors"
 	"go_classify/biz/domain/model"
 	"log"
 )
@@ -12,6 +13,22 @@ func GetRecyclesByUserIdLimit(userId uint, index uint, count uint) []model.Recyc
 	db = filterByUserId(db, userId)
 	db = limit(db, index, count)
 	return findRecycle(db)
+}
+
+// GetRecyclesByStaticLimit 根据回收项状态分页查询
+func GetRecyclesByStaticLimit(static int, index uint, count uint) []model.Recycle {
+	db := GetDB()
+	db = filterByStatic(db, static)
+	db = limit(db, index, count)
+	return findRecycle(db)
+}
+
+// GetRecyclesById 根据回收项状态分页查询
+func GetRecycleById(recycleId uint) *model.Recycle {
+	db := GetDB()
+	db = filterById(db, recycleId)
+	recycle := selectRecycle(db)
+	return recycle
 }
 
 // InsertRecycle 插入一个recycle对象
@@ -29,4 +46,32 @@ func InsertRecycle(insertRecycle *model.Recycle) *model.Recycle {
 func findRecycle(db *gorm.DB) (ans []model.Recycle) {
 	db.Find(&ans)
 	return
+}
+
+// filterByStatic 通过回收项状态过滤
+func filterByStatic(db *gorm.DB, static int) *gorm.DB {
+	db = db.Where("static = ?", static)
+	return db
+}
+
+// selectRecycle 根据db去查询Recycle模型
+func selectRecycle(db *gorm.DB) *model.Recycle {
+	recycle := &model.Recycle{}
+	result := db.First(recycle)
+	if err := result.Error; err != nil {
+		log.Printf("[service][user][selectUser] db select error, err:%s", err)
+		if err == gorm.ErrRecordNotFound {
+			return nil
+		} else {
+			panic(errors.SYSTEM_ERROR)
+		}
+	}
+
+	return recycle
+}
+
+// SaveRecycle 更新并覆盖recycle
+func SaveRecycle(recycle *model.Recycle) {
+	db := GetDB()
+	db.Save(recycle)
 }

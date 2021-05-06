@@ -16,3 +16,4 @@ var NO_TOKEN_ERROR = &Error{Code: 30002, ErrorMessage: "无token"}
 var AUTHORITY_ERROR = &Error{Code: 30003, ErrorMessage: "无权限"}
 var NULL_ERROR = &Error{Code: 30004, ErrorMessage: "空返回值"}
 var NO_LOGIN_ERROR = &Error{Code: 30005, ErrorMessage: "无登录状态"}
+var RECYCLE_STATIC_ERROR = &Error{Code: 30006, ErrorMessage: "回收单状态错误"}
