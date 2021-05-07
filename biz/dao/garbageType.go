@@ -9,6 +9,9 @@ import (
 
 // GetGarbageTypeById 通过id查询garbageType
 func GetGarbageTypeById(garbageTypeId uint) *model.GarbageType {
+	if garbageTypeId == 0 {
+		return &model.GarbageType{}
+	}
 	db := GetDB()
 	db = filterById(db, garbageTypeId)
 	return selectGarbageType(db)
@@ -23,7 +26,12 @@ func FindGarbageTypeByParentId(parentGarbageTypeId uint) []model.GarbageType {
 
 // filterByParentGarbageTypeId 根据父类目id过滤garbageType
 func filterByParentGarbageTypeId(db *gorm.DB, parentGarbageTypeId uint) *gorm.DB {
-	db = db.Where("parent_type_id = ?", parentGarbageTypeId)
+	// 特化逻辑，如果传入为0，那么认定为空
+	if parentGarbageTypeId == 0 {
+		db = db.Where("parent_type_id is NULL")
+	} else {
+		db = db.Where("parent_type_id = ?", parentGarbageTypeId)
+	}
 	return db
 }
 
@@ -46,5 +54,5 @@ func selectGarbageType(db *gorm.DB) *model.GarbageType {
 // findGarbageType 根据传入的db查询garbageType
 func findGarbageType(db *gorm.DB) (ans []model.GarbageType) {
 	db.Find(&ans)
-	return
+	return ans
 }

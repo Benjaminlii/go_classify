@@ -59,18 +59,13 @@ func SignUp(c *gin.Context) {
 	}
 	username, haveUsername := param["username"]
 	password, havePassword := param["password"]
-	name, haveName := param["name"]
-	userIdentityStr, haveUserIdentity := param["userIdentity"]
-	categoryStr, haveCategory := param["category"]
-	if !(haveUsername && havePassword && haveName && haveUserIdentity && haveCategory) {
-		log.Print("[service][user][SignUp] has nil in username, password, name, userIdentity and category")
+	if !(haveUsername && havePassword) {
+		log.Print("[service][user][SignUp] has nil in username and password")
 		panic(errors.REQUEST_TYPE_ERROR)
 	}
-	userIdentity := util.StringToUInt(userIdentityStr)
-	category := util.StringToUInt(categoryStr)
 
 	// 注册
-	user := service.SignUp(username, password, name, userIdentity, category)
+	user := service.SignUp(username, password)
 
 	// 生成并添加token到redis，存储user的json
 	token := util.AddUserToken(user)

@@ -18,7 +18,7 @@ func SelectUser(username string, password string) *model.User {
 }
 
 // SignUp 用户注册
-func SignUp(username string, password string, name string, userIdentity uint, category uint) *model.User {
+func SignUp(username string, password string) *model.User {
 	db := dao.GetDB()
 	// 数据库事物
 	tx := db.Begin()

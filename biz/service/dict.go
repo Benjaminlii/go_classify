@@ -11,7 +11,7 @@ import (
 func GetChildGarbageType(c *gin.Context, parentGarbageTypeId uint) ([]dto.GetChildGarbageTypeDTO, *model.GarbageType) {
 	// 获取子类目信息
 	childGarbageTypes := dao.FindGarbageTypeByParentId(parentGarbageTypeId)
-	childs := make([]dto.GetChildGarbageTypeDTO, len(childGarbageTypes))
+	childs := make([]dto.GetChildGarbageTypeDTO, 0)
 	for _, childGarbageType := range childGarbageTypes {
 		image := dao.GetImageById(childGarbageType.ImageId)
 		getChildGarbageTypeDTO := dto.GetChildGarbageTypeDTO{

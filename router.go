@@ -21,7 +21,7 @@ func register(r *gin.Engine) {
 	// 用户模块
 	user := goClassify.Group("/user")
 	{
-		user.POST("/sign_in", handler.SignIn)
+		user.POST("/sign_in_by_password", handler.SignIn)
 		user.POST("/sign_up", handler.SignUp)
 		user.POST("/administrator_sign_up", handler.AdministratorSignUp)
 

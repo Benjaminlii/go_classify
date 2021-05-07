@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/gin-gonic/gin"
 	"go_classify/biz/constants"
+	"go_classify/biz/constants/errors"
 	"go_classify/biz/dao"
 	"go_classify/biz/domain/dto"
 	"go_classify/biz/domain/model"
@@ -36,7 +37,7 @@ func GetRecycles(c *gin.Context, index uint, limit uint) []dto.GetRecyclesDTO {
 	recycles := dao.GetRecyclesByUserIdLimit(currentUser.ID, index, limit)
 
 	// 结果集
-	ans := make([]dto.GetRecyclesDTO, len(recycles))
+	ans := make([]dto.GetRecyclesDTO, 0)
 	for _, recycle := range recycles {
 		classifyRecord := dao.GetClassifyRecordById(recycle.ClassifyRecordId)
 		image := dao.GetImageById(classifyRecord.ImageId)
@@ -44,7 +45,7 @@ func GetRecycles(c *gin.Context, index uint, limit uint) []dto.GetRecyclesDTO {
 		getRecyclesDTO := dto.GetRecyclesDTO{
 			ImageUrl:      image.Url,
 			GarbageType:   garbageType.Name,
-			RecycleTime:   recycle.CreatedAt.Unix(),
+			RecycleTime:   recycle.CreatedAt.UnixNano() / 1e6,
 			RecycleStatic: recycle.Static,
 		}
 		ans = append(ans, getRecyclesDTO)
@@ -59,7 +60,7 @@ func GetRecycleToMessage(c *gin.Context, index uint, limit uint) []dto.GetRecycl
 	recycles := dao.GetRecyclesByStaticLimit(constants.RECYCLE_STATIC_PENDING, index, limit)
 
 	// 结果集
-	ans := make([]dto.GetRecyclesToManageDTO, len(recycles))
+	ans := make([]dto.GetRecyclesToManageDTO, 0)
 	for _, recycle := range recycles {
 		classifyRecord := dao.GetClassifyRecordById(recycle.ClassifyRecordId)
 		image := dao.GetImageById(classifyRecord.ImageId)
@@ -70,7 +71,7 @@ func GetRecycleToMessage(c *gin.Context, index uint, limit uint) []dto.GetRecycl
 			ImageUrl:      image.Url,
 			Username:      postUser.Username,
 			GarbageType:   garbageType.Name,
-			RecycleTime:   recycle.CreatedAt.Unix(),
+			RecycleTime:   recycle.CreatedAt.UnixNano() / 1e6,
 			RecycleStatic: recycle.Static,
 		}
 		ans = append(ans, getRecyclesDTO)
@@ -93,6 +94,9 @@ func FollowUpOrTurnDown(c *gin.Context, recycleId uint, active uint) {
 		recycle.Static = constants.RECYCLE_STATIC_DONE
 	} else if active == 0 { // 驳回
 		recycle.Static = constants.RECYCLE_STATIC_CLOSE
+	} else {
+		log.Printf("[service][recycle][FollowUpOrTurnDown] active is not allow.")
+		panic(errors.REQUEST_TYPE_ERROR)
 	}
 
 	dao.SaveRecycle(recycle)

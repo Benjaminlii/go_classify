@@ -26,7 +26,7 @@ const (
 
 	USER_DEFAULT_AVATAR_IMAGE_ID = 1 // 用户默认头像id
 
-	DO_CLASSIFY_SERVICE_URL = "http://localhost:8686/classify/do_classify/" // 识别服务的API地址
+	DO_CLASSIFY_SERVICE_URL = "http://49.235.228.156:8787/classify/do_classify/" // 识别服务的API地址
 )
 
 // Redis相关

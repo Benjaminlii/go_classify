@@ -20,7 +20,7 @@ func GetRecords(c *gin.Context, index uint, limit uint) []dto.GetRecordsDTO {
 	// 获取该用户的识别记录，分页
 	records := dao.FindClassifyRecordByUserIdLimit(user.ID, index, limit)
 
-	ans := make([]dto.GetRecordsDTO, len(records))
+	ans := make([]dto.GetRecordsDTO, 0)
 
 	for _, record := range records {
 		image := dao.GetImageById(record.ImageId)
@@ -29,7 +29,7 @@ func GetRecords(c *gin.Context, index uint, limit uint) []dto.GetRecordsDTO {
 			RecordId:        record.ID,
 			ImageUrl:        image.Url,
 			GarbageTypeName: garbageType.Name,
-			ClassifyTime:    record.CreatedAt.Unix(),
+			ClassifyTime:    record.CreatedAt.UnixNano() / 1e6,
 		}
 
 		ans = append(ans, getRecordsDTO)

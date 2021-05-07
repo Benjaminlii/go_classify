@@ -35,6 +35,10 @@ func InitMySQL(config *config.BasicConfig) {
 func createTable() {
 	db := DB
 
+	if !db.HasTable(&model.Administrator{}) {
+		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.Administrator{})
+		log.Print("[system][mysql][createTable] create table `administrators`")
+	}
 	if !db.HasTable(&model.ClassifyRecord{}) {
 		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.ClassifyRecord{})
 		db.Model(&model.ClassifyRecord{}).AddForeignKey("user_id", "users(id)", "RESTRICT", "RESTRICT")

@@ -27,13 +27,13 @@ func GetChildGarbageType(c *gin.Context) {
 	}
 	parentGarbageTypeId := util.StringToUInt(parentGarbageTypeIdStr)
 
-	// 得到该用户的识别记录列表
 	childGarbageTypes, parent := service.GetChildGarbageType(c, parentGarbageTypeId)
 
 	// 设置请求响应
 	respMap := make(map[string]interface{}, 2)
 	respMap["child_garbage_types"] = childGarbageTypes
 	respMap["parent_garbage_type_id"] = parent.ParentTypeId
+	respMap["this_garbage_type_id"] = parent.ID
 	c.Set(constants.DATA, respMap)
 }
 
