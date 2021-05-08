@@ -10,6 +10,7 @@ import (
 	"go_classify/biz/util"
 	"io/ioutil"
 	"log"
+	"net/url"
 )
 
 // GetRecords 查询当前账号的识别记录列表
@@ -59,8 +60,18 @@ func GoClassify(c *gin.Context) {
 		panic(errors.REQUEST_TYPE_ERROR)
 	}
 
+	photo, err = url.QueryUnescape(photo)
+	if err != nil {
+		log.Print("[service][classify][GoClassify] QueryUnescape error , err:", err)
+		panic(err)
+	}
+	//photoBytes := []byte(photo)
 	// 成图片文件并把文件写入到buffer
-	bytes, _ := base64.StdEncoding.DecodeString(photo)
+	bytes, err := base64.StdEncoding.DecodeString(photo)
+	if err != nil {
+		log.Print("[service][classify][GoClassify] DecodeString error , err:", err)
+		panic(err)
+	}
 	// buffer输出到jpg文件中
 	classifyPhotoName := util.GetClassifyPhotoName(c, photoName)
 	imagePath := fmt.Sprintf("%s%s", constants.IMAGE_PATH_PRE_CLASSIFY_PHOTO, classifyPhotoName)
@@ -68,7 +79,7 @@ func GoClassify(c *gin.Context) {
 	err = ioutil.WriteFile(imagePath, bytes, 0666)
 	if err != nil {
 		log.Printf("[service][classify][GoClassify] WriteFile error, filePath:%s, err:%s", imagePath, err)
-		panic(errors.SYSTEM_ERROR)
+		panic(err)
 	}
 
 	// 得到该用户的识别记录列表

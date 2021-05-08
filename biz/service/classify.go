@@ -52,18 +52,17 @@ func GoClassify(c *gin.Context, imagePath string, imageUrl string) string {
 	paramMap := map[string]string{"image_path": imagePath}
 	result := util.Post(url, paramMap, "")
 	// 结果解析
-	ansMap := make(map[string]string)
+	ansMap := make(map[string]uint)
 	err := json.Unmarshal([]byte(result), &ansMap)
 	if err != nil {
-		log.Printf("[service][classify][GoClassify] json unmarshal error, err:%s", err)
+		log.Printf("[service][classify][GoClassify] do_classify service error, err:%s", err)
 		panic(err)
 	}
-	garbageTypeIdStr, isOk := paramMap["code"]
+	garbageTypeId, isOk := ansMap["code"]
 	if !isOk {
 		log.Printf("[service][classify][GoClassify] classify service return not have code")
 		panic(errors.OUTSIDE_ERROR)
 	}
-	garbageTypeId := util.StringToUInt(garbageTypeIdStr)
 	// 校验结果
 	garbageType := dao.GetGarbageTypeById(garbageTypeId)
 	if garbageType == nil {
