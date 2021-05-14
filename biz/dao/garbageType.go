@@ -21,6 +21,7 @@ func GetGarbageTypeById(garbageTypeId uint) *model.GarbageType {
 func FindGarbageTypeByParentId(parentGarbageTypeId uint) []model.GarbageType {
 	db := GetDB()
 	db = filterByParentGarbageTypeId(db, parentGarbageTypeId)
+	db = orderById(db, true)
 	return findGarbageType(db)
 }
 

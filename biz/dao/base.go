@@ -47,6 +47,17 @@ func orderByCreatedAt(db *gorm.DB, isDesc bool) *gorm.DB {
 	return db
 }
 
+// orderById 按照id排序
+// isDesc:是否降序
+func orderById(db *gorm.DB, isDesc bool) *gorm.DB {
+	if isDesc {
+		db = db.Order("id DESC")
+	} else {
+		db = db.Order("id ASC")
+	}
+	return db
+}
+
 // limit 分页查询
 func limit(db *gorm.DB, offset uint, count uint) *gorm.DB {
 	if offset > 0 && count > 0 {

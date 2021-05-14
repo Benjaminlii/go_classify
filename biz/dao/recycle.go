@@ -12,6 +12,7 @@ func GetRecyclesByUserIdLimit(userId uint, index uint, count uint) []model.Recyc
 	db := GetDB()
 	db = filterByUserId(db, userId)
 	db = limit(db, index, count)
+	db = orderById(db, true)
 	return findRecycle(db)
 }
 

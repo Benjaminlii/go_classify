@@ -19,6 +19,7 @@ func FindClassifyRecordByUserIdLimit(userId uint, index uint, count uint) []mode
 	db := GetDB()
 	db = filterByUserId(db, userId)
 	db = limit(db, index, count)
+	db = orderById(db, true)
 	return findClassifyRecord(db)
 }
 
