@@ -17,6 +17,12 @@ const (
 	RECYCLE_STATIC_CLOSE   = 3 // 回收单关闭
 )
 
+// 回收单状态
+const (
+	SET_APPEND_STATIC_PENDING = 1 // 待处理
+	SET_APPEND_STATIC_DONE    = 2 // 已经处理
+)
+
 // 图像模块
 const (
 	IMAGE_PATH_PRE_USER_AVATAR    = "/root/image/go_classify/avatar/"                               // 用户头像存储绝对路径前缀

@@ -37,6 +37,8 @@ func register(r *gin.Engine) {
 	{
 		classify.POST("/get_records", handler.GetRecords)
 		classify.POST("/go_classify", handler.GoClassify)
+		classify.POST("/go_classify_result", handler.GoClassifyResult)
+		classify.POST("/feedback", handler.Feedback)
 	}
 
 	dict := goClassify.Group("/dict")

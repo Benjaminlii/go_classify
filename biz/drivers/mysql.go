@@ -71,7 +71,13 @@ func createTable() {
 	}
 	if !db.HasTable(&model.User{}) {
 		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.User{})
-		db.Model(&model.User{}).AddForeignKey("avatar_image_id", "image(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.User{}).AddForeignKey("avatar_image_id", "images(id)", "RESTRICT", "RESTRICT")
+		log.Print("[system][mysql][createTable] create table `users`")
+	}
+	if !db.HasTable(&model.SetAppend{}) {
+		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").CreateTable(&model.SetAppend{})
+		db.Model(&model.SetAppend{}).AddForeignKey("image_id", "images(id)", "RESTRICT", "RESTRICT")
+		db.Model(&model.SetAppend{}).AddForeignKey("record_id", "classify_records(id)", "RESTRICT", "RESTRICT")
 		log.Print("[system][mysql][createTable] create table `users`")
 	}
 

@@ -77,7 +77,52 @@ func GoClassify(c *gin.Context, imagePath string, imageUrl string) string {
 		ImageId:       classifyImage.ID,
 		GarbageTypeId: garbageType.ID,
 	}
-	dao.InsertClassifyRecord(record)
+	record = dao.InsertClassifyRecord(record)
 
-	return util.UintToString(garbageType.ID)
+	return util.UintToString(record.ID)
+}
+
+// GoClassifyResult 通过recordId获取其对应的分类结果信息
+func GoClassifyResult(c *gin.Context, recordId uint) *dto.GetGarbageDetailDTO {
+	// 获取record
+	record := dao.GetClassifyRecordById(recordId)
+
+	// 获取garbageType
+	garbageType := dao.GetGarbageTypeById(record.GarbageTypeId)
+
+	// 根据garbageDetailId获取detail
+	garbageDetail := dao.GetGarbageDetailById(garbageType.GarbageDetailId)
+
+	// 基础类目
+	baseGarbageType := dao.GetGarbageTypeById(garbageDetail.BaseTypeId)
+
+	// 类目介绍图片
+	image := dao.GetImageById(record.ImageId)
+
+	ans := &dto.GetGarbageDetailDTO{
+		Name:     garbageDetail.Name,
+		BaseType: baseGarbageType.Name,
+		Path:     garbageDetail.Path,
+		Image:    image.Url,
+		Content:  garbageDetail.Content,
+		Process:  garbageDetail.Process,
+	}
+	return ans
+}
+
+// Feedback 误差结果反馈
+func Feedback(c *gin.Context, recordId uint, rightType string) {
+	// 获取record
+	record := dao.GetClassifyRecordById(recordId)
+
+	setAppend := &model.SetAppend{
+		RecordId:  record.ID,
+		ImageId:   record.ImageId,
+		Status:    constants.SET_APPEND_STATIC_PENDING,
+		RightType: rightType,
+	}
+
+	dao.InsertSetAppend(setAppend)
+
+	return
 }

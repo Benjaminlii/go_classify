@@ -87,6 +87,60 @@ func GoClassify(c *gin.Context) {
 
 	// 设置请求响应
 	respMap := make(map[string]interface{}, 1)
-	respMap["garbage_type_id"] = garbageType
+	respMap["record_id"] = garbageType
+	c.Set(constants.DATA, respMap)
+}
+
+// GoClassifyResult 获取某条记录的识别分类结果
+func GoClassifyResult(c *gin.Context) {
+	defer util.SetResponse(c)
+
+	// 解析请求参数
+	param := make(map[string]string)
+	err := c.BindJSON(&param)
+	if err != nil {
+		log.Printf("[service][classify][GoClassifyResult] request type error, err:%s", err)
+		panic(err)
+	}
+	recordIdStr, haveRecordId := param["record_id"]
+	if !haveRecordId {
+		log.Print("[service][classify][GoClassifyResult] record_id is nil")
+		panic(errors.REQUEST_TYPE_ERROR)
+	}
+
+	recordId := util.StringToUInt(recordIdStr)
+	// 得到该用户的识别记录列表
+	garbageDetailDTO := service.GoClassifyResult(c, recordId)
+
+	// 设置请求响应
+	respMap := make(map[string]interface{}, 1)
+	respMap["record"] = garbageDetailDTO
+	c.Set(constants.DATA, respMap)
+}
+
+// Feedback 误差结果反馈
+func Feedback(c *gin.Context) {
+	defer util.SetResponse(c)
+
+	// 解析请求参数
+	param := make(map[string]string)
+	err := c.BindJSON(&param)
+	if err != nil {
+		log.Printf("[service][classify][Feedback] request type error, err:%s", err)
+		panic(err)
+	}
+	recordIdStr, haveRecordId := param["record_id"]
+	rightType, haveRightType := param["right_type"]
+	if !(haveRecordId && haveRightType) {
+		log.Print("[service][classify][Feedback] has nil in record_id and right_type")
+		panic(errors.REQUEST_TYPE_ERROR)
+	}
+
+	recordId := util.StringToUInt(recordIdStr)
+	// 得到该用户的识别记录列表
+	service.Feedback(c, recordId, rightType)
+
+	// 设置请求响应
+	respMap := make(map[string]interface{}, 0)
 	c.Set(constants.DATA, respMap)
 }
