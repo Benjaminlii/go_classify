@@ -113,9 +113,7 @@ func GoClassifyResult(c *gin.Context) {
 	garbageDetailDTO := service.GoClassifyResult(c, recordId)
 
 	// 设置请求响应
-	respMap := make(map[string]interface{}, 1)
-	respMap["record"] = garbageDetailDTO
-	c.Set(constants.DATA, respMap)
+	c.Set(constants.DATA, garbageDetailDTO)
 }
 
 // Feedback 误差结果反馈
