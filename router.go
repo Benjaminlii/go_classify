@@ -9,6 +9,11 @@ import (
 func register(r *gin.Engine) {
 	goClassify := r.Group("/api/go_classify")
 
+	ping := goClassify.Group("/ping")
+	{
+		ping.POST("/ping", handler.Ping)
+	}
+
 	// 管理员处理回收项模块
 	manage := goClassify.Group("/manage")
 	{
@@ -51,11 +56,6 @@ func register(r *gin.Engine) {
 	{
 		recycle.POST("/post_recycle", handler.PostRecycle)
 		recycle.POST("/get_recycles", handler.GetRecycles)
-	}
-
-	ping := goClassify.Group("/ping")
-	{
-		ping.POST("/ping", handler.Ping)
 	}
 
 }
