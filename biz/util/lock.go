@@ -2,15 +2,16 @@ package util
 
 import (
 	"fmt"
-	"go_classify/biz/constants"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/drivers"
 	"log"
 	"runtime"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/drivers"
 )
 
 // Lock 加redis分布式锁

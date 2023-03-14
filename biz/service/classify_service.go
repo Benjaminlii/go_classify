@@ -2,14 +2,15 @@ package service
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
-	"go_classify/biz/constants"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/dao"
-	"go_classify/biz/domain/dto"
-	"go_classify/biz/domain/model"
-	"go_classify/biz/util"
 	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/dao"
+	"github.com/Benjaminlii/go_classify/biz/domain/dto"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
+	"github.com/Benjaminlii/go_classify/biz/util"
+	"github.com/gin-gonic/gin"
 )
 
 // GetRecords 查询当前账号的识别记录列表

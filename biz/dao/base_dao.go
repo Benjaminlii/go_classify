@@ -1,10 +1,10 @@
 package dao
 
 import (
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/drivers"
+	"github.com/Benjaminlii/go_classify/biz/util"
 	"github.com/jinzhu/gorm"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/drivers"
-	"go_classify/biz/util"
 )
 
 func GetDB() *gorm.DB {

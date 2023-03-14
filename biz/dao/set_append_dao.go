@@ -1,8 +1,9 @@
 package dao
 
 import (
-	"go_classify/biz/domain/model"
 	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
 )
 
 // InsertSetAppend 插入一个SetAppend对象

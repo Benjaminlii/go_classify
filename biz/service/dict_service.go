@@ -1,10 +1,10 @@
 package service
 
 import (
+	"github.com/Benjaminlii/go_classify/biz/dao"
+	"github.com/Benjaminlii/go_classify/biz/domain/dto"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
 	"github.com/gin-gonic/gin"
-	"go_classify/biz/dao"
-	"go_classify/biz/domain/dto"
-	"go_classify/biz/domain/model"
 )
 
 // GetChildGarbageType 获取某类目下的所有子类目部分信息

@@ -3,14 +3,15 @@ package handler
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"go_classify/biz/constants"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/drivers"
-	"go_classify/biz/service"
-	"go_classify/biz/util"
 	"io/ioutil"
 	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/drivers"
+	"github.com/Benjaminlii/go_classify/biz/service"
+	"github.com/Benjaminlii/go_classify/biz/util"
+	"github.com/gin-gonic/gin"
 )
 
 // SignIn 用户登录

@@ -1,11 +1,12 @@
 package util
 
 import (
-	"github.com/gin-gonic/gin"
-	"go_classify/biz/constants"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/domain/model"
 	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
+	"github.com/gin-gonic/gin"
 )
 
 // GetCurrentUser 从context中获取登录状态

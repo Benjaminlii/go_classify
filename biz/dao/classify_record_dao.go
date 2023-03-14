@@ -1,10 +1,11 @@
 package dao
 
 import (
-	"github.com/jinzhu/gorm"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/domain/model"
 	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
+	"github.com/jinzhu/gorm"
 )
 
 // GetClassifyRecordById 根据id获取某一个classifyRecord

@@ -2,10 +2,11 @@ package drivers
 
 import (
 	"fmt"
-	"github.com/go-redis/redis"
-	"go_classify/biz/config"
 	"log"
 	"strconv"
+
+	"github.com/Benjaminlii/go_classify/biz/config"
+	"github.com/go-redis/redis"
 )
 
 var (

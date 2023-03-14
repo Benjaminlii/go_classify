@@ -2,11 +2,12 @@ package util
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"go_classify/biz/constants"
-	"go_classify/biz/constants/errors"
 	"log"
 	"net/http"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/gin-gonic/gin"
 )
 
 func SetResponse(c *gin.Context) {

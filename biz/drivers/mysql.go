@@ -2,11 +2,12 @@ package drivers
 
 import (
 	"fmt"
+	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/config"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"go_classify/biz/config"
-	"go_classify/biz/domain/model"
-	"log"
 )
 
 var (

@@ -1,12 +1,13 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
-	"go_classify/biz/constants"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/service"
-	"go_classify/biz/util"
 	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/service"
+	"github.com/Benjaminlii/go_classify/biz/util"
+	"github.com/gin-gonic/gin"
 )
 
 // GetChildGarbageType 查看当前类目下的子集

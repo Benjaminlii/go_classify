@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/Benjaminlii/go_classify/biz/config"
+	"github.com/Benjaminlii/go_classify/biz/drivers"
+	"github.com/Benjaminlii/go_classify/biz/middleware"
+	"github.com/Benjaminlii/go_classify/biz/task"
 	"github.com/gin-gonic/gin"
-	"go_classify/biz/config"
-	"go_classify/biz/drivers"
-	"go_classify/biz/middleware"
-	"go_classify/biz/task"
 )
 
 // 主函数

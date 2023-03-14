@@ -2,8 +2,9 @@ package errors
 
 import (
 	"fmt"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
 	"github.com/gin-gonic/gin"
-	"go_classify/biz/constants"
 )
 
 // Error 自定义错误类型
