@@ -1,10 +1,11 @@
 package dao
 
 import (
-	"github.com/jinzhu/gorm"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/domain/model"
 	"log"
+
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
+	"github.com/jinzhu/gorm"
 )
 
 // GetAdministratorByUsernameAndPassword 根据用户名密码查找管理员

@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/Benjaminlii/go_classify/biz/handler"
+	"github.com/Benjaminlii/go_classify/biz/middleware"
 	"github.com/gin-gonic/gin"
-	"go_classify/biz/handler"
-	"go_classify/biz/middleware"
 )
 
 func register(r *gin.Engine) {

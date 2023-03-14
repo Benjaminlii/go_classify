@@ -1,11 +1,12 @@
 package drivers
 
 import (
-	"go_classify/biz/config"
 	"sync"
+
+	"github.com/Benjaminlii/go_classify/biz/config"
 )
 
-var(
+var (
 	once sync.Once
 )
 
@@ -15,4 +16,3 @@ func InitFromConfigOnce() {
 		InitRedis(&config.AppConfig)
 	})
 }
-

@@ -2,14 +2,15 @@ package util
 
 import (
 	"encoding/json"
-	"go_classify/biz/constants"
-	"go_classify/biz/constants/errors"
-	"go_classify/biz/domain/model"
-	"go_classify/biz/drivers"
 	"log"
 	"time"
+
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/constants/errors"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
+	"github.com/Benjaminlii/go_classify/biz/drivers"
+	uuid "github.com/satori/go.uuid"
 )
-import "github.com/satori/go.uuid"
 
 // AddUserToken 向redis中添加某个用户的token，有效时间为3天
 func AddUserToken(user *model.User) (token string) {

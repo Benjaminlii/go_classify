@@ -1,8 +1,8 @@
 package model
 
 import (
+	"github.com/Benjaminlii/go_classify/biz/domain/model/base"
 	"github.com/jinzhu/gorm"
-	"go_classify/biz/domain/model/base"
 )
 
 type Administrator struct {

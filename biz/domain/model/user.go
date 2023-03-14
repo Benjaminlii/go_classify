@@ -1,7 +1,7 @@
 package model
 
 import (
-	"go_classify/biz/domain/model/base"
+	"github.com/Benjaminlii/go_classify/biz/domain/model/base"
 	"gorm.io/gorm"
 )
 

@@ -1,11 +1,11 @@
 package service
 
 import (
+	"github.com/Benjaminlii/go_classify/biz/constants"
+	"github.com/Benjaminlii/go_classify/biz/dao"
+	"github.com/Benjaminlii/go_classify/biz/domain/model"
+	"github.com/Benjaminlii/go_classify/biz/util"
 	"github.com/gin-gonic/gin"
-	"go_classify/biz/constants"
-	"go_classify/biz/dao"
-	"go_classify/biz/domain/model"
-	"go_classify/biz/util"
 )
 
 // SelectUser 查询用户信息，用于登录
