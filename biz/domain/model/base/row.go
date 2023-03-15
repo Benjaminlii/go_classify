@@ -1,53 +1,32 @@
 package base
 
 import (
+	"database/sql/driver"
 	"encoding/json"
-	"log"
+	"errors"
+	"fmt"
 )
 
-// Row 拓展信息
 type Row struct {
-	Row string `gorm:"column:row"` // 拓展信息
+	Row map[string]interface{} `gorm:"column:row"`
 }
 
-// RowToMap 从Row中根据JSON格式的数据反序列化出map
-func (row *Row) RowToMap() (mapData map[string]string, err error) {
-	mapData = make(map[string]string)
-	err = json.Unmarshal([]byte(row.Row), &mapData)
-	if err != nil {
-		log.Printf("[Row][RowToMap] unmarshal error, err:%v", err)
-		return map[string]string{}, err
+func (row *Row) Scan(value interface{}) error {
+	bytes, ok := value.([]byte)
+	if !ok {
+		return errors.New(fmt.Sprint("Failed to unmarshal JSONB value:", value))
 	}
-	return mapData, nil
+	err := json.Unmarshal(bytes, row)
+	return err
 }
 
-// MapToRow 根据Map序列化出Row
-func (row *Row) MapToRow(mapData map[string]string) (err error) {
-	jsonString, err := json.Marshal(mapData)
-	if err != nil {
-		log.Printf("[Row][MapToRow] marshal error, err:%v", err)
-		return err
+func (row *Row) Value() (driver.Value, error) {
+	if len(row.Row) == 0 {
+		return nil, nil
 	}
-	row.Row = string(jsonString)
-	return nil
-}
-
-// Set 插入或则覆盖一个键值对
-func (row *Row) Set(key string, value string) (err error) {
-	mapData, err := row.RowToMap()
+	b, err := json.Marshal(*row)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	mapData[key] = value
-	return row.MapToRow(mapData)
-}
-
-// Delete 删除一个键
-func (row *Row) Delete(key string) (err error) {
-	mapData, err := row.RowToMap()
-	if err != nil {
-		return err
-	}
-	delete(mapData, key)
-	return row.MapToRow(mapData)
+	return string(b), nil
 }
